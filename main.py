@@ -31,8 +31,6 @@ def timerInterval(interval):
         print("correct position for camera")
         break
     
-
-
 def count_green(image):
   img = cv2.imread(image)
   cv2.imshow("opencv",img)
@@ -48,20 +46,14 @@ def count_green(image):
   w = math.sqrt(green)
   print('Squareroot(width/height) is: ' + str(w))
   return w 
-#for i in images:
-#  square = count_green(i)
-#  if square > minSize and square < maxSize:
-#    print("correct position for camera")
-#    break
+
 
 
 
 timerInterval(0.1)
 
-
     
 #cv2.namedWindow("opencv")
 #cv2.imshow("opencv",img)
-
 
 # vim: ft=python ts=4 sw=4 expandtab
