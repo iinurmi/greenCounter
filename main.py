@@ -68,9 +68,9 @@ def count_green(image):
 
   dst = cv2.inRange(img, GREEN_MIN, GREEN_MAX)
   green = cv2.countNonZero(dst)
-  print('The number of green pixels is: ' + str(green))
+  print(bcolors.OKBLUE + 'The number of green pixels is: ' + str(green)+ bcolors.ENDC)
   w = math.sqrt(green)
-  print('SQRT DISTANCE is: ' + str(w))
+  print(bcolors.OKBLUE + 'SQRT DISTANCE is: ' + str(w) + bcolors.ENDC)
   return w  
 
 def imbrightness(image):
@@ -82,9 +82,9 @@ def imbrightness(image):
   #stat = ImageStat.Stat(im)
   bness = stat.mean[0]  
   if (bness < 0.5): 
-    print(bcolors.OKGREEN + 'The brightness is too low (' + bness + '). Increase brightness.' + bcolors.ENDC)
+    print(bcolors.FAIL + 'The brightness is too low (' + bness + '). Increase brightness.' + bcolors.ENDC)
   else:
-    print('The brightness is OK')
+    print(bcolors.OKCYAN+ 'The brightness is OK' + bcolors.ENDC)
   return stat.mean[0]
 
 timerInterval(0.1)
