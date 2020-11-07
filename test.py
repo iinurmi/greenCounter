@@ -6,13 +6,12 @@
 #sys.path.append('/usr/local/lib/python3.7/site-packages')
 
 import cv2
+import PIL 
+from PIL import Image
 import numpy as np
 import math
-from PIL import Image
-from PIL import ImageStat
 import time
 import os
-
 #minsquare = 60
 #images = [img,img2,img3]
 #foreach i in images
@@ -20,6 +19,7 @@ import os
 #    Success -> Stop for minute etc
 cv2.namedWindow("opencv")
 imageFolder = "images"
+videoFile = ""
 
 #images = ["images/image1.png","images/image2.png","images/image3.png","images/image4.png","images/image5.png","images/image6.png", "images/image7.png"]
 
@@ -70,24 +70,22 @@ def count_green(image):
   green = cv2.countNonZero(dst)
   print('The number of green pixels is: ' + str(green))
   w = math.sqrt(green)
-  print('SQRT DISTANCE is: ' + str(w))
-  return w  
+  print('Squareroot(width/height) is: ' + str(w))
+  return w 
 
 def imbrightness(image):
-  
-  im = Image.open(image).convert('L') #you can pass multiple arguments in single line
-  #print(type(im))
-  stat = ImageStat.Stat(im)
-  #im = np.array(Image.convert('L'))
-  #stat = ImageStat.Stat(im)
-  bness = stat.mean[0]  
+  print('asd')
+  im = Image.convert('L')
+  stat = PIL.ImageStat.Stat(im)
+  bness = stat.mean[0]
+  print('asd')
   if (bness < 0.5): 
-    print(bcolors.OKGREEN + 'The brightness is too low (' + bness + '). Increase brightness.' + bcolors.ENDC)
+    print('The brightness is too low (' + bness + '). Increase brightness.')
   else:
     print('The brightness is OK')
   return stat.mean[0]
 
-timerInterval(0.1)
+
 
     
 #cv2.namedWindow("opencv")
