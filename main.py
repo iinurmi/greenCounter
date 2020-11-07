@@ -27,6 +27,7 @@ imageNames = os.listdir(imageFolder)
 images = []
 for i in imageNames:
   images.append("images/" + i)
+images.sort()
 print(imageNames)
 print(images)
 #range in which we are happy with the camera angle
@@ -56,31 +57,52 @@ def timerInterval(interval):
         print(bcolors.OKGREEN + "CORRECT POSITION - KEEP POSITION" + bcolors.ENDC)
         break
       print(bcolors.WARNING + "DRONE POSITION NOT CENTERED" + bcolors.ENDC)
-    
+
+def display_text(value, label, img, position):
+    font = cv2.FONT_HERSHEY_SIMPLEX
+    if position is None:
+      position = [20,500]
+    bottomLeftCornerOfText = (position[0],position[1])
+    fontScale              = 1
+    fontColor              = (255,255,255)
+    lineType               = 2
+
+    distanceS = label+':'+str(round(value, 2))
+    cv2.putText(img, distanceS, 
+      bottomLeftCornerOfText, 
+      font, 
+      fontScale,
+      fontColor,
+      lineType)   
+    cv2.imshow("img",img)
+
+
 def count_green(image):
   img = cv2.imread(image)
-  cv2.imshow("opencv",img)
-  cv2.waitKey(1)
+  
   # minimum value of green pixels
   GREEN_MAX = np.array([100, 255, 200], np.uint8)
   # maximum value of green pixels
   GREEN_MIN = np.array([0, 100, 177], np.uint8)
-
   dst = cv2.inRange(img, GREEN_MIN, GREEN_MAX)
   green = cv2.countNonZero(dst)
   print(bcolors.OKBLUE + 'The number of green pixels is: ' + str(green)+ bcolors.ENDC)
   w = math.sqrt(green)
-  print(bcolors.OKBLUE + 'SQRT DISTANCE is: ' + str(w) + bcolors.ENDC)
+  display_text(w, 'C', img, [20,500])
+  print(bcolors.OKBLUE + 'SQRT Size is: ' + str(w) + bcolors.ENDC)
+  cv2.imshow("opencv",img)
+  cv2.waitKey(1)
   return w  
 
 def imbrightness(image):
   
-  im = Image.open(image).convert('L') #you can pass multiple arguments in single line
+  im = Image.open(image).convert('L') 
   #print(type(im))
   stat = ImageStat.Stat(im)
   #im = np.array(Image.convert('L'))
   #stat = ImageStat.Stat(im)
   bness = stat.mean[0]  
+  display_text(bness, 'Brightness',cv2.imread(image),[20,500])
   if (bness < 0.5): 
     print(bcolors.FAIL + 'The brightness is too low (' + bness + '). Increase brightness.' + bcolors.ENDC)
   else:
