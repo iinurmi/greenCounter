@@ -9,17 +9,39 @@ import cv2
 import numpy as np
 import math
 import time
+import os
 #minsquare = 60
 #images = [img,img2,img3]
 #foreach i in images
 #  if(w = minsquare)
 #    Success -> Stop for minute etc
 cv2.namedWindow("opencv")
+imageFolder = "images"
+videoFile = ""
 
-images = ["images/image1.png","images/image2.png","images/image3.png","images/image4.png","images/image5.png","images/image6.png", "images/image7.png"]
+#images = ["images/image1.png","images/image2.png","images/image3.png","images/image4.png","images/image5.png","images/image6.png", "images/image7.png"]
+
+imageNames = os.listdir(imageFolder)
+images = []
+for i in imageNames:
+  images.append("images/" + i)
+print(imageNames)
+print(images)
 #range in which we are happy with the camera angle
 minSize = 95 
 maxSize = 96
+
+#colors for printing sugars
+class bcolors:
+  HEADER = '\033[95m'
+  OKBLUE = '\033[94m'
+  OKCYAN = '\033[96m'
+  OKGREEN = '\033[92m'
+  WARNING = '\033[93m'
+  FAIL = '\033[91m'
+  ENDC = '\033[0m'
+  BOLD = '\033[1m'
+  UNDERLINE = '\033[4m'
 
 def timerInterval(interval):
   start_time = time.time()
@@ -28,8 +50,9 @@ def timerInterval(interval):
       time.sleep(start_time + i*interval - time.time()+0.1)
       square = count_green(images[i])
       if square > minSize and square < maxSize:
-        print("correct position for camera")
+        print(bcolors.OKGREEN + "CORRECT POSITION - KEEP POSITION" + bcolors.ENDC)
         break
+      print(bcolors.WARNING + "DRONE POSITION NOT CENTERED" + bcolors.ENDC)
     
 def count_green(image):
   img = cv2.imread(image)
