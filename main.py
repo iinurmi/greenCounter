@@ -13,7 +13,9 @@ from PIL import ImageStat
 import time
 import os
 import videoToFrames
+from webcam import testWebcam
 
+#testWebcam()
 #minsquare = 60
 #images = [img,img2,img3]
 #foreach i in images
