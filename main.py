@@ -12,27 +12,31 @@ from PIL import Image
 from PIL import ImageStat
 import time
 import os
+import videoToFrames
 
 #minsquare = 60
 #images = [img,img2,img3]
 #foreach i in images
 #  if(w = minsquare)
 #    Success -> Stop for minute etc
+input_loc = 'testvideo.MOV'
+output_loc = 'frames'
+#videoToFrames.video_to_frames(input_loc, output_loc)
 cv2.namedWindow("opencv")
-imageFolder = "images"
+imageFolder = "frames"
 
 #images = ["images/image1.png","images/image2.png","images/image3.png","images/image4.png","images/image5.png","images/image6.png", "images/image7.png"]
 
 imageNames = os.listdir(imageFolder)
 images = []
 for i in imageNames:
-  images.append("images/" + i)
+  images.append(imageFolder + "/" + i)
 images.sort()
 print(imageNames)
 print(images)
 #range in which we are happy with the camera angle
-minSize = 95 
-maxSize = 96
+minSize = 260 
+maxSize = 330
 
 #colors for printing sugars
 class bcolors:
@@ -55,8 +59,8 @@ def timerInterval(interval):
       imbrightness(images[i])
       if square > minSize and square < maxSize:
         print(bcolors.OKGREEN + "CORRECT POSITION - KEEP POSITION" + bcolors.ENDC)
-        break
-      print(bcolors.WARNING + "DRONE POSITION NOT CENTERED" + bcolors.ENDC)
+      else:
+        print(bcolors.WARNING + "DRONE POSITION NOT CENTERED" + bcolors.ENDC)
 
 def display_text(value, label, img, position):
     font = cv2.FONT_HERSHEY_SIMPLEX
